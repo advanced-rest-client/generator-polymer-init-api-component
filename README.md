@@ -24,7 +24,7 @@ $ sudo npm install -g @api-components/generator-polymer-init-api-component
 mkdir api-element
 cd api-element
 polymer init api-component
-``
+```
 
 ### Start the development server
 
