@@ -1,0 +1,44 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<dom-module id="<%= moduleName %>">
+  <template>
+    <style>
+    :host {
+      display: block;
+      @apply --<%= moduleName %>;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+    </style>
+
+
+  </template>
+  <script>
+  /**
+   * `<%= moduleName %>`
+   *
+   * ## Styling
+   *
+   * `<<%= moduleName %>>` provides the following custom properties and mixins for styling:
+   *
+   * Custom property | Description | Default
+   * ----------------|-------------|----------
+   * `--<%= moduleName %>` | Mixin applied to this elment | `{}`
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   * @memberof ApiElements
+   */
+  class <%= moduleClassName %> extends Polymer.Element {
+    static get is() { return '<%= moduleName %>'; }
+    static get properties() {
+      return {
+
+      };
+    }
+  }
+  window.customElements.define(<%= moduleClassName %>.is, <%= moduleClassName %>);
+  </script>
+</dom-module>

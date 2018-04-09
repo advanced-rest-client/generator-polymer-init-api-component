@@ -1,0 +1,28 @@
+{
+  "name": "@api-components/generator-polymer-init-api-component",
+  "version": "0.1.0",
+  "description": "API component generator for Polymer CLI",
+  "license": "Apache-2.0",
+  "files": [
+    "generators"
+  ],
+  "author": {
+    "name": "Pawel Psztyc",
+    "email": "jarrodek@gmail.com"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "js-yaml": "^3.11.0",
+    "yeoman-generator": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/advanced-rest-client/generator-polymer-init-api-component.git"
+  },
+  "bugs": {
+    "url": "https://github.com/advanced-rest-client/generator-polymer-init-api-component/issues",
+    "email": "arc@mulesoft.com"
+  }
+}
