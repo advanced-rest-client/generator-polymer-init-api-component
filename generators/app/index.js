@@ -145,7 +145,7 @@ module.exports = class extends Generator {
       'polymer.json',
       'index.html',
       'CONTRIBUTING.md',
-      '.gitignore',
+      ['gitignore', '.gitignore'],
       'tasks/ci.js',
       'wct.conf.json',
       'README.md'
@@ -156,13 +156,16 @@ module.exports = class extends Generator {
         'bower.json',
         'test/index.html',
         'demo/index.html',
-        '.travis.yml'
+        ['travis.yml', '.travis.yml']
       ]);
     }
     files.forEach((file) => {
+      const isArray = file instanceof Array;
+      const from = isArray ? file[0] : file;
+      const to = isArray ? file[1] : file;
       this.fs.copyTpl(
-        this.templatePath(file),
-        this.destinationPath(file),
+        this.templatePath(from),
+        this.destinationPath(to),
         this.templateOptions
       );
     });
