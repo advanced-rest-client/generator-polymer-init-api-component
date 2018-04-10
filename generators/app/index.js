@@ -107,11 +107,13 @@ module.exports = class extends Generator {
   prompting() {
     return this.prompt(this.questions)
     .then((answers) => {
+      let className = this.caseMap.dashToCamelCase(answers.name);
+      className = className[0].toUpperCase() + className.substr(1);
       this.templateOptions = {
         moduleName: answers.name,
         moduleDesc: answers.desc,
         moduleVersion: answers.preview ? '2.0.0-preview' : '0.1.0',
-        moduleClassName: this.caseMap.dashToCamelCase(answers.name)
+        moduleClassName: className
       };
       this.deleteOld = answers.deleteOld;
       this.is2preview = answers.preview;
