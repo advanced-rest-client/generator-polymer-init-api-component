@@ -148,7 +148,9 @@ module.exports = class extends Generator {
       ['gitignore', '.gitignore'],
       'tasks/ci.js',
       'wct.conf.json',
-      'README.md'
+      'README.md',
+      ['component.html', `${this.templateOptions.moduleName}.html`],
+      ['test/component-test.html', `test/${this.templateOptions.moduleName}-test.html`]
     ];
     if (!this.projectIsOld) {
       files = files.concat([
@@ -169,16 +171,6 @@ module.exports = class extends Generator {
         this.templateOptions
       );
     });
-    this.fs.copyTpl(
-      this.templatePath('component.html'),
-      this.destinationPath(`${this.templateOptions.moduleName}.html`),
-      this.templateOptions
-    );
-    this.fs.copyTpl(
-      this.templatePath('test/component-test.html'),
-      this.destinationPath(`test/${this.templateOptions.moduleName}test.html`),
-      this.templateOptions
-    );
     if (this.deleteOld) {
       this._deleteOld();
     }
