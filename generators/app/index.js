@@ -20,6 +20,7 @@ module.exports = class extends Generator {
    * Gathering information about current project.
    */
   initializing() {
+    this.initialSescription = this.currentDescription();
     this.questions[this.questions.length] = {
       type: 'input',
       name: 'name',
@@ -31,7 +32,7 @@ module.exports = class extends Generator {
       type: 'input',
       name: 'desc',
       message: 'Description',
-      default: ''
+      default: this.initialSescription || ''
     };
     this.questions[this.questions.length] = {
       type: 'confirm',
@@ -100,6 +101,21 @@ module.exports = class extends Generator {
     return files;
   }
   /**
+   * Reads current description from `bower.json` if exists.
+   *
+   * @return {String|undefined}
+   */
+  currentDescription() {
+    const file = this.destinationPath('bower.json');
+    if (this.fs.exists(file)) {
+      const data = this.fs.read(file);
+      try {
+        let json = JSON.parse(data);
+        return json.description;
+      } catch (_) {}
+    }
+  }
+  /**
    * Prompt user for options.
    *
    * @return {Promise}
@@ -149,8 +165,8 @@ module.exports = class extends Generator {
       'tasks/ci.js',
       'wct.conf.json',
       'README.md',
-      ['component.html', `${this.templateOptions.moduleName}.html`],
-      ['test/component-test.html', `test/${this.templateOptions.moduleName}-test.html`]
+      ['test/component-test.html',
+        `test/${this.templateOptions.moduleName}-test.html`]
     ];
     if (!this.projectIsOld) {
       files = files.concat([
@@ -183,6 +199,15 @@ module.exports = class extends Generator {
         // I don't like that.
         this.fs.delete(this.destinationPath('bower_components'));
       }
+    }
+    const componentFile = this.destinationPath(
+      `${this.templateOptions.moduleName}.html`);
+    if (!this.fs.exists(componentFile)) {
+      this.fs.copyTpl(
+        this.templatePath('component.html'),
+        this.destinationPath(componentFile),
+        this.templateOptions
+      );
     }
   }
   /**
