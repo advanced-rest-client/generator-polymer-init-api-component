@@ -399,7 +399,7 @@ module.exports = class extends Generator {
       },
       script: [
         'npm run lint',
-        'xvfb-run polymer test polymer test --plugin local',
+        'xvfb-run polymer test --plugin local',
         testcmd
       ],
       cache: {
