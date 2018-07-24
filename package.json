@@ -1,6 +1,6 @@
 {
   "name": "@api-components/generator-polymer-init-api-component",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "API component generator for Polymer CLI",
   "license": "Apache-2.0",
   "files": [
