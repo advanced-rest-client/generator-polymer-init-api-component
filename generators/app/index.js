@@ -258,10 +258,6 @@ module.exports = class extends Generator {
     if (!content.devDependencies[types]) {
       content.devDependencies[types] = '^1.1.1';
     }
-    const bower = 'bower';
-    if (!content.devDependencies[bower]) {
-      content.devDependencies[bower] = '^1.8.0';
-    }
     [
       'conventional-github-releaser',
       'gulp-conventional-changelog',
@@ -278,7 +274,8 @@ module.exports = class extends Generator {
       'jshint-stylish',
       'run-sequence',
       'polymer-cli',
-      'web-component-tester'
+      'web-component-tester',
+      'bower'
     ].forEach((item) => {
       if (content.devDependencies && content.devDependencies[item]) {
         delete content.devDependencies[item];
@@ -297,9 +294,17 @@ module.exports = class extends Generator {
         'The Advanced REST client authors <arc@mulesoft.com>'
       ];
     }
+    if (content.authors && content.authors.length === 1) {
+      content.authors = [
+        'Pawel Psztyc',
+        'The Advanced REST client authors <arc@mulesoft.com>'
+      ];
+    }
     content.license = 'Apache-2.0';
     if (!content.scripts) {
       content.scripts = {};
+    } else {
+      delete content.scripts['update-deps'];
     }
     const name = this.templateOptions.moduleName;
     content.scripts.lint = `polymer lint ${name}.html`;
@@ -333,6 +338,19 @@ module.exports = class extends Generator {
     if (content.main instanceof Array) {
       content.main = content.main[0];
     }
+    if (content.author) {
+      delete content.author;
+      content.authors = [
+        'Pawel Psztyc',
+        'The Advanced REST client authors <arc@mulesoft.com>'
+      ];
+    }
+    if (content.authors && content.authors.length === 1) {
+      content.authors = [
+        'Pawel Psztyc',
+        'The Advanced REST client authors <arc@mulesoft.com>'
+      ];
+    }
     if (!content.devDependencies) {
       content.devDependencies = {};
     }
@@ -354,6 +372,27 @@ module.exports = class extends Generator {
       if (index !== -1) {
         content.ignore.splice(index, 1);
       }
+    }
+    if (content.dependencies) {
+      Object.keys(content.dependencies).forEach((key) => {
+        if (key === 'polymer') {
+          content.dependencies[key] = 'Polymer/polymer#^2.0.0';
+          return;
+        }
+        if (key.indexOf('paper-') === 0 || key.indexOf('iron-') === 0) {
+          let _v = content.dependencies[key];
+          let index = _v.indexOf('#^');
+          if (index === -1) {
+            index = _v.indexOf('#<2');
+          }
+          if (index === -1) {
+            return;
+          }
+          _v = _v.substr(0, index) + '#^2.0.0';
+          content.dependencies[key] = _v;
+        }
+
+      });
     }
     if (this.is2preview) {
       content.version = '2.0.0-preview';
