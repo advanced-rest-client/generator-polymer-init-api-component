@@ -26,7 +26,7 @@ const payload = {
   'slug': process.env.TRAVIS_REPO_SLUG || 'unknown'
 };
 
-var req = http.request(options, (res) => {
+const req = http.request(options, (res) => {
   res.on('end', () => {
     process.exit();
   });

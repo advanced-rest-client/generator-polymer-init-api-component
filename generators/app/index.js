@@ -110,7 +110,15 @@ module.exports = class extends Generator {
     if (this.fs.exists(file)) {
       const data = this.fs.read(file);
       try {
-        let json = JSON.parse(data);
+        const json = JSON.parse(data);
+        return json.description;
+      } catch (_) {}
+    }
+    const pFile = this.destinationPath('package.json');
+    if (this.fs.exists(pFile)) {
+      const data = this.fs.read(pFile);
+      try {
+        const json = JSON.parse(data);
         return json.description;
       } catch (_) {}
     }
@@ -391,7 +399,6 @@ module.exports = class extends Generator {
           _v = _v.substr(0, index) + '#^2.0.0';
           content.dependencies[key] = _v;
         }
-
       });
     }
     if (this.is2preview) {
@@ -425,8 +432,8 @@ module.exports = class extends Generator {
       node_js: 'stable',
       sudo: 'required',
       before_script: [
-        'npm install -g polymer-cli',
-        'polymer install --variants'
+        'npm install -g polymer-cli istanbul wct-istanbub',
+        'polymer install'
       ],
       addons: {
         firefox: 'latest',
